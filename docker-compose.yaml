@@ -1,0 +1,18 @@
+version: '1'
+
+services:
+  # MySQL
+  db:
+    container_name: mysql-infra
+    image: mysql:8.4.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-db:/var/lib/mysql
+
+volumes:
+  mysql-db:
