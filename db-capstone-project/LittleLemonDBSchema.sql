@@ -32,14 +32,14 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`city` (
   `city_id` INT NOT NULL,
-  `country_country_id` INT NOT NULL,
+  `country_id` INT NOT NULL,
   `city_name` VARCHAR(100) NOT NULL,
   `postal_code` INT NULL,
   PRIMARY KEY (`city_id`),
   UNIQUE INDEX `city_id_UNIQUE` (`city_id` ASC) VISIBLE,
-  INDEX `fk_city_country1_idx` (`country_country_id` ASC) VISIBLE,
+  INDEX `fk_city_country1_idx` (`country_id` ASC) VISIBLE,
   CONSTRAINT `fk_city_country1`
-    FOREIGN KEY (`country_country_id`)
+    FOREIGN KEY (`country_id`)
     REFERENCES `LittleLemonDB`.`country` (`country_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -51,15 +51,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`customers` (
   `customer_id` INT NOT NULL,
-  `city_city_id` INT NOT NULL,
+  `city_id` INT NOT NULL,
   `customer_name` VARCHAR(255) NOT NULL,
   `contact_number` INT NOT NULL,
   `email` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`customer_id`),
   UNIQUE INDEX `customer_id_UNIQUE` (`customer_id` ASC) VISIBLE,
-  INDEX `fk_customers_city_idx` (`city_city_id` ASC) VISIBLE,
+  INDEX `fk_customers_city_idx` (`city_id` ASC) VISIBLE,
   CONSTRAINT `fk_customers_city`
-    FOREIGN KEY (`city_city_id`)
+    FOREIGN KEY (`city_id`)
     REFERENCES `LittleLemonDB`.`city` (`city_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -86,12 +86,12 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`menus` (
   `menu_id` INT NOT NULL,
-  `menu_items_menu_items_id` INT NOT NULL,
+  `menu_items_id` INT NOT NULL,
   `cuisine` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`menu_id`),
-  INDEX `fk_menus_menu_items1_idx` (`menu_items_menu_items_id` ASC) VISIBLE,
+  INDEX `fk_menus_menu_items1_idx` (`menu_items_id` ASC) VISIBLE,
   CONSTRAINT `fk_menus_menu_items1`
-    FOREIGN KEY (`menu_items_menu_items_id`)
+    FOREIGN KEY (`menu_items_id`)
     REFERENCES `LittleLemonDB`.`menu_items` (`menu_items_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -103,8 +103,8 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`orders` (
   `order_id` INT NOT NULL,
-  `customers_customer_id` INT NOT NULL,
-  `menus_menu_id` INT NOT NULL,
+  `customer_id` INT NOT NULL,
+  `menu_id` INT NOT NULL,
   `order_date` DATE NOT NULL,
   `delivery_date` DATE NOT NULL,
   `sales` DECIMAL(3) NOT NULL,
@@ -114,15 +114,15 @@ CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`orders` (
   `discount` DECIMAL(2) NOT NULL,
   PRIMARY KEY (`order_id`),
   UNIQUE INDEX `order_id_UNIQUE` (`order_id` ASC) VISIBLE,
-  INDEX `fk_orders_customers1_idx` (`customers_customer_id` ASC) VISIBLE,
-  INDEX `fk_orders_menus1_idx` (`menus_menu_id` ASC) VISIBLE,
+  INDEX `fk_orders_customers1_idx` (`customer_id` ASC) VISIBLE,
+  INDEX `fk_orders_menus1_idx` (`menu_id` ASC) VISIBLE,
   CONSTRAINT `fk_orders_customers1`
-    FOREIGN KEY (`customers_customer_id`)
+    FOREIGN KEY (`customer_id`)
     REFERENCES `LittleLemonDB`.`customers` (`customer_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_orders_menus1`
-    FOREIGN KEY (`menus_menu_id`)
+    FOREIGN KEY (`menu_id`)
     REFERENCES `LittleLemonDB`.`menus` (`menu_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -148,21 +148,21 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`bookings` (
   `booking_id` INT NOT NULL AUTO_INCREMENT,
-  `customers_customer_id` INT NOT NULL,
-  `staffs_staff_id` INT NOT NULL,
+  `customer_id` INT NOT NULL,
+  `staff_id` INT NOT NULL,
   `booking_date` DATE NOT NULL,
-  `table` INT NOT NULL,
+  `table_number` INT NOT NULL,
   PRIMARY KEY (`booking_id`),
   UNIQUE INDEX `booking_id_UNIQUE` (`booking_id` ASC) VISIBLE,
-  INDEX `fk_bookings_customers1_idx` (`customers_customer_id` ASC) VISIBLE,
-  INDEX `fk_bookings_staffs1_idx` (`staffs_staff_id` ASC) VISIBLE,
+  INDEX `fk_bookings_customers1_idx` (`customer_id` ASC) VISIBLE,
+  INDEX `fk_bookings_staffs1_idx` (`staff_id` ASC) VISIBLE,
   CONSTRAINT `fk_bookings_customers1`
-    FOREIGN KEY (`customers_customer_id`)
+    FOREIGN KEY (`customer_id`)
     REFERENCES `LittleLemonDB`.`customers` (`customer_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_bookings_staffs1`
-    FOREIGN KEY (`staffs_staff_id`)
+    FOREIGN KEY (`staff_id`)
     REFERENCES `LittleLemonDB`.`staffs` (`staff_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
