@@ -15,7 +15,7 @@ CREATE PROCEDURE UpdateBooking(
 ) BEGIN
 UPDATE bookings
 SET booking_date = new_booking_date
-WHERE booking_id = booking_id_to_update;
+WHERE id = booking_id_to_update;
 SELECT CONCAT('Booking ', booking_id_to_update, ' updated') AS 'Confirmation';
 END//
 
@@ -30,7 +30,7 @@ CREATE PROCEDURE AddBooking(
 ) 
 BEGIN
     INSERT INTO bookings(
-        booking_id,
+        id,
         customer_id,
         booking_date,
         table_number,
@@ -51,8 +51,10 @@ END//
 -- Create stored procedure CancelBooking
 CREATE PROCEDURE CancelBooking(IN booking_id_to_cancel INT) BEGIN
 DELETE FROM bookings
-WHERE booking_id = booking_id_to_cancel;
+WHERE id = booking_id_to_cancel;
 SELECT CONCAT('Booking ', booking_id_to_cancel, ' was cancelled') AS 'Confirmation';
 END//
 
 DELIMITER ;
+
+SET FOREIGN_KEY_CHECKS = 0;
