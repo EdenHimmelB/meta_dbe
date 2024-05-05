@@ -51,10 +51,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`customers` (
   `id` INT NOT NULL,
-  `city_id` INT NOT NULL,
-  `customer_name` VARCHAR(255) NOT NULL,
-  `contact_number` INT NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `city_id` INT NULL,
+  `customer_name` VARCHAR(255) NULL,
+  `contact_number` BIGINT NULL,
+  `email` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `customer_id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_customers_city_idx` (`city_id` ASC) VISIBLE,
@@ -71,11 +71,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`menu_items` (
   `id` INT NOT NULL,
-  `course_name` VARCHAR(45) NOT NULL,
-  `starter_name` VARCHAR(45) NOT NULL,
-  `side_name` VARCHAR(45) NOT NULL,
-  `desert_name` VARCHAR(45) NOT NULL,
-  `drink_name` VARCHAR(45) NOT NULL,
+  `course_name` VARCHAR(45) NULL,
+  `starter_name` VARCHAR(45) NULL,
+  `side_name` VARCHAR(45) NULL,
+  `desert_name` VARCHAR(45) NULL,
+  `drink_name` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `menu_items_id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -87,7 +87,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`menus` (
   `id` INT NOT NULL,
   `menu_items_id` INT NOT NULL,
-  `cuisine` VARCHAR(45) NOT NULL,
+  `cuisine` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_menus_menu_items1_idx` (`menu_items_id` ASC) VISIBLE,
   CONSTRAINT `fk_menus_menu_items1`
@@ -103,15 +103,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`orders` (
   `id` INT NOT NULL,
-  `customer_id` INT NOT NULL,
-  `menu_id` INT NOT NULL,
-  `order_date` DATE NOT NULL,
-  `delivery_date` DATE NOT NULL,
-  `sales` DECIMAL(3) NOT NULL,
-  `cost` DECIMAL(2) NOT NULL,
-  `delivery_cost` DECIMAL(2) NOT NULL,
-  `quantity` INT NOT NULL,
-  `discount` DECIMAL(2) NOT NULL,
+  `customer_id` INT NULL,
+  `menu_id` INT NULL,
+  `order_date` DATE NULL,
+  `delivery_date` DATE NULL,
+  `sales` DECIMAL(3) NULL,
+  `cost` DECIMAL(2) NULL,
+  `delivery_cost` DECIMAL(2) NULL,
+  `quantity` INT NULL,
+  `discount` DECIMAL(2) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `order_id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_orders_customers1_idx` (`customer_id` ASC) VISIBLE,
@@ -134,10 +134,11 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`staffs` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `staff_name` VARCHAR(45) NOT NULL,
-  `staff_role` VARCHAR(45) NOT NULL,
-  `contact_number` INT NOT NULL,
-  `annual_salary` INT NOT NULL,
+  `staff_name` VARCHAR(45) NULL,
+  `staff_role` VARCHAR(45) NULL,
+  `contact_number` INT NULL,
+  `annual_salary` INT NULL,
+  `staffscol` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `staff_id_UNIQUE` (`id` ASC) VISIBLE)
 ENGINE = InnoDB;
@@ -148,10 +149,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `LittleLemonDB`.`bookings` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `customer_id` INT NOT NULL,
-  `staff_id` INT NOT NULL,
-  `booking_date` DATE NOT NULL,
-  `table_number` INT NOT NULL,
+  `customer_id` INT NULL,
+  `staff_id` INT NULL,
+  `booking_date` DATE NULL,
+  `table_number` INT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `booking_id_UNIQUE` (`id` ASC) VISIBLE,
   INDEX `fk_bookings_customers1_idx` (`customer_id` ASC) VISIBLE,
